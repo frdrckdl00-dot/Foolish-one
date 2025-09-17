@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foolish One – Lyric Viewer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    #lyric {
+      font-size: 1.8rem;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    audio {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Foolish One – Taylor Swift</h1>
+  
+  <!-- Your audio file -->
+  <audio id="audio" controls>
+    <source src="your-audio-file.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div id="lyric"></div>
+
+  <script>
+    // Lyrics with start times (in seconds)
+    const lyrics = [
+      {time: 0, text: "You know how to keep me waitin'"},
+      {time: 4, text: "I know how to act like I'm fine"},
+      {time: 8, text: "Don't know what to call this situation"},
+      {time: 12, text: "But I know I can't call you mine"},
+      {time: 16, text: "And it's delicate, but I will do my best to seem bulletproof"},
+      {time: 20, text: "'Cause when my head is on your shoulder"},
+      {time: 25, text: "It starts thinkin' you'll come around"},
+      {time: 29, text: "And maybe, someday, when we're older"},
+      {time: 33, text: "This is something we'll laugh about"},
+      {time: 37, text: "Over coffee every mornin' while you're watching the news"},
+      {time: 41, text: 'But then the voices say, "You are not the exception'},
+      {time: 45, text: 'You will never learn your lesson"'},
+      {time: 49, text: "Foolish one"},
+      {time: 53, text: "Stop checkin' your mailbox for confessions of love"},
+      {time: 57, text: "That ain't never gonna come"},
+      {time: 61, text: "You will take the long way, you will take the long way down"},
+    ];
+
+    const audio = document.getElementById('audio');
+    const lyricDiv = document.getElementById('lyric');
+    let currentIndex = -1;
+
+    audio.addEventListener('timeupdate', () => {
+      const currentTime = audio.currentTime;
+      // Find the last lyric whose time <= currentTime
+      for (let i = lyrics.length - 1; i >= 0; i--) {
+        if (currentTime >= lyrics[i].time) {
+          if (currentIndex !== i) {
+            currentIndex = i;
+            lyricDiv.style.opacity = 0;
+            setTimeout(() => {
+              lyricDiv.textContent = lyrics[i].text;
+              lyricDiv.style.opacity = 1;
+            }, 500); // fade out then fade in
+          }
+          break;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
